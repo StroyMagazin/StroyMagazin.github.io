@@ -1,0 +1,10 @@
+$(document).ready(function(){
+  $('#f_feedback_FID1 .alx_feed_back_form_submit_block').click(function(){
+      yaCounter24658553.reachGoal('zayavka2');
+      yaCounter24658553.reachGoal('zayavka3');
+  });
+});
+
+$(document).ready(function(){
+	$('form[name="bform"] input[name="USER_CHECKWORD"]').parents('.bx-authform-formgroup-container').addClass('hidethis');
+});

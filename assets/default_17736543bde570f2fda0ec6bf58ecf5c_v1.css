@@ -1,0 +1,16 @@
+
+
+/* Start:/bitrix/components/svc/favorite.head/templates/mobile/style.css?1690869321232*/
+.display-none {
+    display: none !important;
+}
+
+.header-mobile-basket-block .basket.favorite a .num_products {
+    width: 17px !important;
+    height: 17px !important;
+    text-align: center;
+    padding: 0;
+    padding-top: 1px;
+}
+/* End */
+/* /bitrix/components/svc/favorite.head/templates/mobile/style.css?1690869321232 */

@@ -1,0 +1,85 @@
+$(document).ready(function(){
+	var popupMenuBgInit = false;
+	// $(".popup-catalog-menu-show-btn").on("click", function(){
+	// 	if(!$(".popup-catalog-menu-wr").is(".opened")){
+	// 		$(".popup-catalog-menu-wr").addClass('opened');
+	// 		if(!$("div").is(".popup-catalog-menu-bg")){
+	// 			$("body").append('<div class="popup-catalog-menu-bg"></div>');
+	// 			if(!popupMenuBgInit){
+	// 				$(".popup-catalog-menu-bg").on("click", function(){
+	// 					$(".popup-catalog-menu-wr").removeClass('opened');
+	// 					$(".popup-catalog-menu-bg").removeClass('opened');
+	// 				});
+	// 				popupMenuBgInit = true;
+	// 			}
+	// 		}
+	// 		$(".popup-catalog-menu-bg").addClass('opened');
+	// 	}
+	// 	else{
+	// 		$(".popup-catalog-menu-wr").removeClass('opened');
+	// 		$(".popup-catalog-menu-bg").removeClass('opened');
+	// 	}
+	// });
+
+	var popupMenuBgInit = false, popupMenuCanClose = false;
+	$(".popup-catalog-menu-show-btn").on("click", function(){
+
+		let popupCatalogMenuShowBtn = $(this);
+
+		let windowHeight = $(window).height();
+
+		if (popupCatalogMenuShowBtn.hasClass('active')){
+			$(".popup-catalog-menu-wr").removeClass('opened');
+
+			popupCatalogMenuShowBtn.removeClass('active');
+
+			$(".popup-catalog-menu-bg").css('minHeight', windowHeight + 'px');
+
+			$(".popup-catalog-menu-bg").removeClass('opened');
+
+		}
+		else {
+			$(".popup-catalog-menu-wr").addClass('opened');
+			popupCatalogMenuShowBtn.addClass('active');
+
+			if(!$("div").is(".popup-catalog-menu-bg")){
+				$("body").append('<div class="popup-catalog-menu-bg"></div>');
+				if(!popupMenuBgInit){
+					$(".popup-catalog-menu-bg").on("click", function(){
+						$(".popup-catalog-menu-wr").removeClass('opened');
+						$(".popup-catalog-menu-bg").removeClass('opened');
+
+						popupCatalogMenuShowBtn.removeClass('active');
+					});
+					popupMenuBgInit = true;
+				}
+			}
+
+			$(".popup-catalog-menu-bg").css('minHeight', windowHeight + 'px');
+
+			$(".popup-catalog-menu-bg").addClass('opened');
+
+			refreshScrollInSubmenu();
+		}
+
+
+	});
+
+	popupMenuPartResize();
+});
+
+$(window).resize(function(){
+	popupMenuPartResize();
+
+	let popupCatalogMenuBg = $('.popup-catalog-menu-bg'),
+		windowHeight = $(window).height();
+
+	if (popupCatalogMenuBg.length > 0) {
+		popupCatalogMenuBg.css('minHeight', windowHeight + 'px');
+	}
+});
+
+function popupMenuPartResize(){
+	var popupMenuPartWidth = ($(".header-catalog-menu-block").outerWidth() - 30) / 4;
+	$(".popup-catalog-menu-wr ul").outerWidth(popupMenuPartWidth);
+}

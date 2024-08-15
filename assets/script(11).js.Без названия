@@ -1,0 +1,15 @@
+function svc_update_minicart() {
+	obMinicart = $("a #num_products");
+	ajax_url = obMinicart.attr("component_path") + "?AJAX=Y&MODE=UPDATE_MINICART";
+	$.ajax({
+		type: "POST",
+		url: ajax_url,
+		cache: false,
+		data: '',
+		dataType: 'html',
+		success: function(result) {
+			obMinicart.text(result);
+			obMinicart.css('display','block');			
+		}
+	});				
+}

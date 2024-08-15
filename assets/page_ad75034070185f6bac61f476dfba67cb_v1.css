@@ -1,0 +1,362 @@
+
+
+/* Start:/bitrix/templates/ekonom__new/components/bitrix/news.list/slider/style.css?16908693105382*/
+/** VARIABLES
+===================================*/
+/** RESET AND LAYOUT
+===================================*/
+.bxslider__wrap {
+    position: relative;
+    margin-bottom: 60px;
+    padding: 0;
+    *zoom: 1;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+}
+.bxslider__wrap img {
+    max-width: 100%;
+    display: block;
+}
+.bxslider {
+    margin: 0;
+    padding: 0;
+}
+ul.bxslider {
+    list-style: none;
+}
+.bx-viewport {
+    /*fix other elements on the page moving (on Chrome)*/
+    -webkit-transform: translatez(0);
+}
+/** THEME
+===================================*/
+.bxslider__wrap {
+    -moz-box-shadow: 0 0 5px #ccc;
+    -webkit-box-shadow: 0 0 5px #ccc;
+    box-shadow: 0 0 5px #ccc;
+    border: 5px solid #fff;
+    background: #fff;
+}
+.bxslider__wrap .bx-pager,
+.bxslider__wrap .bx-controls-auto {
+    position: absolute;
+    bottom: -30px;
+    width: 100%;
+}
+/* LOADER */
+.bxslider__wrap .bx-loading {
+    min-height: 50px;
+    background: url('/bitrix/templates/ekonom__new/components/bitrix/news.list/slider/images/bx_loader.gif') center center no-repeat #ffffff;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+}
+/* PAGER */
+.bxslider__wrap .bx-pager {
+    text-align: center;
+    font-size: .85em;
+    font-family: Arial;
+    font-weight: bold;
+    color: #666;
+    padding-top: 20px;
+}
+.bxslider__wrap .bx-pager.bx-default-pager a {
+    background: #666;
+    text-indent: -9999px;
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    outline: 0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.bxslider__wrap .bx-pager.bx-default-pager a:hover,
+.bxslider__wrap .bx-pager.bx-default-pager a.active,
+.bxslider__wrap .bx-pager.bx-default-pager a:focus {
+    background: #000;
+}
+.bxslider__wrap .bx-pager-item,
+.bxslider__wrap .bx-controls-auto .bx-controls-auto-item {
+    display: inline-block;
+    vertical-align: bottom;
+    *zoom: 1;
+    *display: inline;
+}
+.bxslider__wrap .bx-pager-item {
+    font-size: 0;
+    line-height: 0;
+}
+/* DIRECTION CONTROLS (NEXT / PREV) */
+.bxslider__wrap .bx-prev {
+    left: 10px;
+    background: url('/bitrix/templates/ekonom__new/components/bitrix/news.list/slider/images/controls.png') no-repeat 0 -32px;
+}
+.bxslider__wrap .bx-prev:hover,
+.bxslider__wrap .bx-prev:focus {
+    background-position: 0 0;
+}
+.bxslider__wrap .bx-next {
+    right: 10px;
+    background: url('/bitrix/templates/ekonom__new/components/bitrix/news.list/slider/images/controls.png') no-repeat -43px -32px;
+}
+.bxslider__wrap .bx-next:hover,
+.bxslider__wrap .bx-next:focus {
+    background-position: -43px 0;
+}
+.bxslider__wrap .bx-controls-direction a {
+    position: absolute;
+    top: 50%;
+    margin-top: -16px;
+    outline: 0;
+    width: 32px;
+    height: 32px;
+    text-indent: -9999px;
+    z-index: 9999;
+}
+.bxslider__wrap .bx-controls-direction a.disabled {
+    display: none;
+}
+/* AUTO CONTROLS (START / STOP) */
+.bxslider__wrap .bx-controls-auto {
+    text-align: center;
+}
+.bxslider__wrap .bx-controls-auto .bx-start {
+    display: block;
+    text-indent: -9999px;
+    width: 10px;
+    height: 11px;
+    outline: 0;
+    background: url('/bitrix/templates/ekonom__new/components/bitrix/news.list/slider/images/controls.png') -86px -11px no-repeat;
+    margin: 0 3px;
+}
+.bxslider__wrap .bx-controls-auto .bx-start:hover,
+.bxslider__wrap .bx-controls-auto .bx-start.active,
+.bxslider__wrap .bx-controls-auto .bx-start:focus {
+    background-position: -86px 0;
+}
+.bxslider__wrap .bx-controls-auto .bx-stop {
+    display: block;
+    text-indent: -9999px;
+    width: 9px;
+    height: 11px;
+    outline: 0;
+    background: url('/bitrix/templates/ekonom__new/components/bitrix/news.list/slider/images/controls.png') -86px -44px no-repeat;
+    margin: 0 3px;
+}
+.bxslider__wrap .bx-controls-auto .bx-stop:hover,
+.bxslider__wrap .bx-controls-auto .bx-stop.active,
+.bxslider__wrap .bx-controls-auto .bx-stop:focus {
+    background-position: -86px -33px;
+}
+/* PAGER WITH AUTO-CONTROLS HYBRID LAYOUT */
+.bxslider__wrap .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager {
+    text-align: left;
+    width: 80%;
+}
+.bxslider__wrap .bx-controls.bx-has-controls-auto.bx-has-pager .bx-controls-auto {
+    right: 0;
+    width: 35px;
+}
+/* IMAGE CAPTIONS */
+.bxslider__wrap .bx-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #666;
+    background: rgba(80, 80, 80, 0.75);
+    width: 100%;
+}
+.bxslider__wrap .bx-caption span {
+    color: #fff;
+    font-family: Arial;
+    display: block;
+    font-size: .85em;
+    padding: 10px;
+}
+
+
+.bxslider__wrap{
+    margin-bottom: 10px;
+    border: 0;
+}
+.bxslider__wrap .bx-viewport{
+    background: #fff;
+    left: 0;
+}
+.bxslider__wrap .bx-controls-direction a{
+    z-index: 99;
+}
+body .bxslider{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: none;
+}
+.bxslider__item{
+    position: relative;
+    width: 100%;
+}
+.bxslider__item-img{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.bxslider__item-img a{
+    display: block;
+}
+.bxslider__wrap .bx-controls-direction a{
+    background-image: url('/images/a21.png');
+    background-repeat: no-repeat;
+    display: block;
+    width: 55px;
+    height: 55px;
+    text-indent: -9999px;
+    border: 0;
+    margin-top: -27px;
+    opacity: 0 !important;
+    transition: 0.5s;
+    position: absolute;
+    top: 50%;
+}
+.bxslider__wrap:hover .bx-controls-direction a{
+    opacity: 1 !important;
+}
+.bxslider__wrap .bx-prev,
+.bxslider__wrap .bx-prev:hover{
+    left: 10px;
+    background-position: -3px -33px !important;
+}
+.bxslider__wrap .bx-next,
+.bxslider__wrap .bx-next:hover{
+    background-position: -63px -33px !important;
+    right: 5px;
+}
+/* End */
+
+
+/* Start:/bitrix/templates/ekonom__new/components/bitrix/catalog.section.list/sections-list/style.css?16908693092493*/
+.bx-content .grid-section-list {
+    margin: 0;
+    font-size: 0;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -3px;
+}
+
+.grid-section-list .grid-section-list-item {
+    border: 1px solid #4dad3f;
+    margin-right: -1px;
+    margin-bottom: -1px;
+    float: none;
+    vertical-align: top;
+	padding: 15px 15px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.grid-section-list .grid-section-list-item .grid-section-list-item-body {
+
+}
+
+.grid-section-list .grid-section-list-item .grid-section-list-item-img {
+    text-align: center;
+    display: block;
+    height: 165px;
+    position: relative;
+}
+
+.grid-section-list .grid-section-list-item .grid-section-list-item-img img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	max-height: 100%;
+}
+
+.grid-section-list .grid-section-list-item .grid-section-list-item-title {
+    border-top: 1px solid #4dad3f;
+    border-bottom: 1px solid #4dad3f;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #333;
+    font-weight: bold;
+    padding: 12px 0px 10px;
+    display: block;
+    line-height: 1;
+    margin: 12px 0px 10px;
+}
+
+.grid-subsections-body .grid-subsections-inner {
+    padding: 0;
+    margin: 0px 0px 0px;
+    position: relative;
+    overflow: hidden;
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    transition: all 0.6s;
+}
+
+.grid-subsections-body ul {
+    padding: 0;
+    margin: 0px;
+}
+
+.grid-subsections-body ul li {
+	list-style-type: none;
+	overflow: hidden;
+}
+
+.grid-subsections-body ul li .grid-subsections-item-title {
+    padding-right: 40px;
+	position: relative;
+}
+
+.grid-subsections-body ul li .grid-subsections-item-title a {
+	color: #3f3f3f;
+}
+
+.grid-subsections-body ul li .grid-subsections-item-title a:hover {
+    color: #ff6d02;
+}
+
+.grid-subsections-body ul li .grid-subsections-item-title span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #eefcea;
+    padding: 1px 0px;
+    width: 26px;
+    text-align: center;
+}
+
+.grid-subsections-body .grid-subsections-show-more-btn {
+	color: #118400;
+    border-bottom: 1px dashed;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+@media (max-width: 375px){
+    .grid-section-list .grid-section-list-item {
+        width: 100%;
+    }
+}
+/* End */
+/* /bitrix/templates/ekonom__new/components/bitrix/news.list/slider/style.css?16908693105382 */
+/* /bitrix/templates/ekonom__new/components/bitrix/catalog.section.list/sections-list/style.css?16908693092493 */

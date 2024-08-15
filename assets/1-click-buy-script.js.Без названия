@@ -1,0 +1,69 @@
+
+(function($) {
+    $(document).ready(function() {
+
+$('#fancybox').on('click', function(e) {
+				e.preventDefault();
+				var _this = this;
+				$.ajax({
+					type: "GET",
+					url: $(_this).attr('href'),
+					data: {
+						count: $('.tac.transparent_input').val(),
+						price: $(this).attr('data-price'),
+						code: $(this).attr('data-code'),
+						itemName: $(this).attr('data-name'),
+						brand: $(this).attr('data-brand'),
+						category: $(this).attr('data-category'),
+						product: $(this).attr('data-product'),
+					},
+					beforeSend: function(){
+            			$('body').append('<div class="img-load_wrapper"><img class="img-load" src="/bitrix/templates/ekonom__new/ajax/images/wait_5_2.gif"></div>');
+            			$('body').append('<div class="img-load_overlay"></div>');
+					},
+					success: function(message) {
+						$("div.img-load_wrapper").remove();
+						$("div.img-load_overlay").remove();
+						$.fancybox(message, {
+							'scrolling' : 'no',
+						});
+					}
+				})
+			});
+
+ $('#feedbackov').on('submit', function(e) {
+		
+ 				e.preventDefault();
+ 				var __this = this;
+ 				var data = $(__this).serializeArray();
+ 				data.push({
+ 					name: 'count',
+ 					value: $('[name="_ITEM_PRICE"]').val(),
+ 				});
+ 				data.push({
+ 					name: 'price',
+ 					value: parseInt($('[name="_ORDER_PRICE"]').val())/$('[name="_ITEM_PRICE"]').val(),
+ 				});
+ 				data.push({
+ 					name: 'code',
+ 					value: $('[name="_ORDER_NUMBER"]').val(),
+ 				});
+ 				data.push({
+ 					name: 'itemName',
+ 					value: $('[name="_ITEM_NAME"]').val(),
+ 				});
+ 				$.ajax({
+ 					type: "GET",
+ 					url: $(__this).attr('action'),
+ 					data: data,
+ 					success: function(message) {
+ 						var newform = $(message).find('.one-click-form').html();
+ 						$.fancybox(message, {
+ 							'scrolling' : 'no',
+ 						});
+ 					}
+ 				})
+ 			});
+
+    });
+})(jQuery);

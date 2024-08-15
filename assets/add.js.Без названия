@@ -1,0 +1,323 @@
+$(document).ready(function () {
+  var owl = $("#owl-brands");
+
+  owl.owlCarousel({
+    items: 16, //10 items above 1000px browser width
+    itemsDesktop: [1000, 10], //5 items between 1000px and 901px
+    itemsDesktopSmall: [900, 4], // betweem 900px and 601px
+    itemsTablet: [600, 2], //2 items between 600 and 0
+    autoplay: 3000,
+    slideSpeed: 200,
+    stopOnHover: false,
+    navigation: true,
+    navigationText: ["<", ">"],
+    pagination: false,
+    itemsMobile: false, // itemsMobile disabled - inherit from itemsTablet option
+  });
+});
+
+/**ScrollUp*/
+jQuery(document).ready(function () {
+  jQuery("#scrollup img")
+    .mouseover(function () {
+      jQuery(this).animate({ opacity: 0.65 }, 100);
+    })
+    .mouseout(function () {
+      jQuery(this).animate({ opacity: 1 }, 100);
+    })
+    .click(function () {
+      //window.scroll(0 ,0);
+      $("html, body").animate({ scrollTop: 0 }, 500);
+      return false;
+    });
+
+  jQuery(window).scroll(function () {
+    if (jQuery(document).scrollTop() > 700) {
+      jQuery("#scrollup").fadeIn("fast");
+    } else {
+      jQuery("#scrollup").fadeOut("fast");
+    }
+  });
+});
+/**JivoSite*/
+/*
+	Коллбек-функция, вызывается сразу после того, как
+	JivoSite окончательно загрузился
+*/
+function jivo_onLoadCallback() {
+  // Создаем элемент DIV для ярлыка
+  window.jivo_cstm_widget = document.createElement("div");
+  jivo_cstm_widget.setAttribute("id", "jivo_custom_widget");
+  document.body.appendChild(jivo_cstm_widget);
+
+  // Добавляем обработчик клика по ярлыку - чтобы при клике разворачивалось окно
+  jivo_cstm_widget.onclick = function () {
+    jivo_api.open();
+  };
+
+  // Изменяем CSS класс, если есть операторы в онлайне
+  if (jivo_config.chat_mode == "online") {
+    jivo_cstm_widget.setAttribute("class", "jivo_online");
+  }
+
+  // Теперь можно показать ярлык пользователю
+  window.jivo_cstm_widget.style.display = "block";
+}
+
+/*
+	Коллбек-функции jivo_onOpen и jivo_onClose вызываеются всегда,
+	когда окно чата JivoSite разворачивается или сворвачивается
+	пользователем, либо по правилу активного приглашения.
+*/
+function jivo_onOpen() {
+  // Если чат развернут - скрываем ярлык
+  if (jivo_cstm_widget) jivo_cstm_widget.style.display = "none";
+}
+function jivo_onClose() {
+  // Если чат свернут - показываем ярлык
+  if (jivo_cstm_widget) jivo_cstm_widget.style.display = "block";
+}
+
+$(".call-center-link").click(function () {
+  if ($(".call-center").is(":hidden")) {
+    $(".call-center").show();
+  } else {
+    $(".call-center").fadeOut(300);
+  }
+});
+$("#count_select").change(function () {
+  var count_new = $(this).val();
+  $("div.sort_wait").show();
+  $.ajax({
+    url: "/ajax/set_count_on_page.php",
+    data: { count: count_new },
+    type: "POST",
+    cache: false,
+    success: function (html) {
+      location.href = location.pathname;
+    },
+    error: function (xhr, error_text) {
+      if (error_text == "timeout") {
+        alert(
+          "Превышено время ожидания ответа от сервера, обновите страницу и попробуйте снова"
+        );
+      } else {
+        alert(
+          "Возникла ошибка, проверьте подключение к интернету и обновите страницу "
+        );
+      }
+    },
+  });
+});
+function alertObj(obj) {
+  var str = "";
+  for (k in obj) {
+    str += k + ": " + obj[k] + "\r\n";
+  }
+  alert(str);
+}
+$(document).ready(function () {
+  $(".sort_div select").change(function () {
+    set_cookie("SORT_ORDER", $(this).val(), "", "", "", "/");
+    location.reload();
+  });
+
+  /*кнопки плюс/минус кол-во товаров в корзину*/
+  $(".plus").click(function () {
+    var kolvo_input = $(this).parent().find("input[type=text]");
+    var new_val = parseInt(kolvo_input.val()) + 1;
+    $('.element-catalog .info-part input[type="text"]').val("0");
+    $('.element-catalog .info-part input[type="text"]').removeClass("active");
+    $(".element-catalog .info-part .minus").removeClass("active");
+    kolvo_input.val(new_val);
+    kolvo_input.addClass("active");
+    $(this).prev().addClass("active");
+  });
+  $(".minus").click(function () {
+    var kolvo_input = $(this).parent().find("input[type=text]");
+    var new_val = parseInt(kolvo_input.val());
+    if (new_val > 1) new_val--;
+    kolvo_input.val(new_val);
+    if (new_val == 1) {
+      $(this).removeClass("active");
+    }
+  });
+  //preventSelection($('.kolvo-select'));
+  //preventSelection($('.kolvo-select *'));
+  /*кнопки плюс/минус кол-во товаров в корзину --- конец*/
+
+  /*добавление в корзину*/
+  $(".to-cart").click(function () {
+    if (
+      $(this).attr("href") == "javascript:void(0)" ||
+      $(this).hasClass("product")
+    ) {
+      if ($(this).hasClass("product")) {
+        var quantity_container = $(this)
+          .parent()
+          .parent()
+          .find("input[type=text].active");
+        var quantity = quantity_container.val();
+        if (
+          quantity_container.parents(".kolvo-div").find("table.kolvo-select")
+            .length == 2
+        ) {
+          var quantity_multiplier = parseFloat(
+            quantity_container
+              .parents(".kolvo-div")
+              .find(".kolvo-group-value")
+              .html()
+          );
+          quantity = quantity * quantity_multiplier;
+        }
+        var id_product = $(this)
+          .parent()
+          .parent()
+          .find("input[type=text]")
+          .attr("data-id");
+        var priceType = $(quantity_container).data("type");
+      } else {
+        var quantity_container = $(this).parent().find("input[type=text]");
+        var quantity = quantity_container.val();
+        var id_product = $(this)
+          .parent()
+          .find("input[type=text]")
+          .attr("data-id");
+      }
+
+      $(this)
+        .parent()
+        .append('<div class="loader" id="loader_add_busket"></div>');
+      $("#modal_add_cart").fadeOut(300);
+      $.ajax({
+        url: "/ajax/basket_add.php",
+        data: { id: id_product, quantity: quantity, type: priceType },
+        type: "POST",
+        cache: false,
+        success: function (html) {
+          html = $.trim(html);
+
+          switch (html) {
+            case "ok":
+              $.ajax({
+                url: "/ajax/basket_status_ajax.php",
+                type: "POST",
+                cache: false,
+                success: function (html) {
+                  window.setTimeout(function () {
+                    $(".cart_status_text").html(html);
+                    $("#modal_add_cart").fadeIn(300);
+                    $("#loader_add_busket").remove();
+                    quantity_container.val("1");
+                    quantity_container
+                      .parent()
+                      .parent()
+                      .find(".minus")
+                      .removeClass("active");
+                  }, 500);
+                },
+                error: function (xhr, str) {
+                  alert("Возникла ошибка: " + xhr.responseCode);
+                  $("#loader_add_busket").remove();
+                },
+              });
+              break;
+            case "opt":
+              $("#opt_alert").fadeIn(300);
+              var m_top = $("#opt_alert").outerHeight() / 2;
+              $("#opt_alert").css("margin-top", "-" + m_top + "px");
+              $("#loader_add_busket").remove();
+              break;
+            case "roznica":
+              $("#roznica_alert").fadeIn(300);
+              var m_top = $("#roznica_alert").outerHeight() / 2;
+              $("#roznica_alert").css("margin-top", "-" + m_top + "px");
+              $("#loader_add_busket").remove();
+              break;
+            default:
+              alert(html);
+              $("#loader_add_busket").remove();
+              break;
+          }
+        },
+        error: function (xhr, str) {
+          alert("Возникла ошибка: " + xhr.responseCode);
+          $("#loader_add_busket").remove();
+        },
+      });
+    }
+  });
+  $(".clear_cart").click(function () {
+    $.ajax({
+      url: "/ajax/clear_cart.php",
+      data: {},
+      type: "POST",
+      cache: false,
+      success: function (html) {
+        location.href = "/korzina/";
+      },
+      error: function (xhr, str) {
+        alert("Возникла ошибка: " + xhr.responseCode);
+      },
+    });
+  });
+  /*добавление в корзину ---- конец*/
+
+  $(".digits").click(function () {
+    $(this).select();
+  });
+  /*проверки*/
+  $(".digits").keyup(function () {
+    var base = $(this).attr("data-base");
+    if (
+      base == "пог. м" ||
+      base == "кг" ||
+      base == "м" ||
+      base == "м2" ||
+      base == "м3" ||
+      base == "т"
+    ) {
+      this.value = this.value.replace(/,/, ".");
+    } else {
+      this.value = this.value.replace(/[\D]+/, "");
+    }
+
+    var cur_val = this.value;
+    $('.element-catalog .info-part input[type="text"]').val("0");
+    $('.element-catalog .info-part input[type="text"]').removeClass("active");
+    if (cur_val == "") cur_val = 1;
+    $(this).val(cur_val);
+    $(this).addClass("active");
+    if (parseInt(cur_val) == 1) {
+      $(this).prev().prev().removeClass("active");
+    }
+    if (parseInt(cur_val) > 1) {
+      $(this).prev().prev().addClass("active");
+    }
+  });
+
+  /*проверки --- конец*/
+
+  $(".select-kolvo-count").click(function () {
+    event.stopPropagation();
+    $(this).next().next().slideToggle(200);
+  });
+  $(".kolvo-group-container div").click(function () {
+    $(this).parent().prev().html($(this).html());
+    $(this).parent().slideUp(200);
+  });
+  $("body").click(function () {
+    $(".kolvo-group-container").slideUp("400");
+  });
+});
+$(function () {
+  $(".nav.nav-tabs")
+    .find("[data-click]")
+    .on("click", function () {
+      var dataHref = $(this).attr("href");
+      console.log(dataHref);
+      setTimeout(function () {
+        $(document).scrollTop($(dataHref).offset().top - 20);
+      }, 100);
+    });
+});

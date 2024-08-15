@@ -1,0 +1,31 @@
+$(document).ready(function(){
+	if($(".grid-section-list-item div").is(".grid-subsections-show-more-btn")){
+		$(".grid-subsections-show-more-btn").each(function(index, el) {
+			sidebarSectionHeightHandler($(el));
+		});
+	}
+
+	$(".grid-subsections-show-more-btn").on("click", function(){
+		sidebarSectionHeightHandler($(this));
+	});
+});
+
+function sidebarSectionHeightHandler(btn){
+	var gridSectionBlock = btn.parents(".grid-section-list-item");
+	if(gridSectionBlock.find(".grid-subsections-inner").is(".closed")){
+		btn.children("span").text("– Скрыть");
+		var sidebarSectionHeight = gridSectionBlock.find(".grid-subsections-inner ul").outerHeight();
+		gridSectionBlock.find(".grid-subsections-inner").height(sidebarSectionHeight).removeClass('closed');
+	}
+	else{
+		btn.children("span").text("+");
+		var sidebarSectionShow = parseInt(btn.attr('data-show'));
+		var sidebarSectionHeight = 0;
+		gridSectionBlock.find(".grid-subsections-inner ul li").each(function(index, el) {
+			if(index < sidebarSectionShow){
+				sidebarSectionHeight += $(el).outerHeight();
+			}
+		});
+		gridSectionBlock.find(".grid-subsections-inner").height(sidebarSectionHeight).addClass('closed');
+	}
+}

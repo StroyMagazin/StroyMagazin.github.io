@@ -1,0 +1,22 @@
+function svc_update_favorite_head() {
+	var favorites, arFavorites, count, objFavorite;
+	favorites = $.cookie("favorites");
+	objFavorite = $(".basket.favorite a .num_products");
+	if(favorites != null) {
+		arFavorites = favorites.split(",");
+		count = 0;
+		$.each(arFavorites, function(index, value){
+			if(value == "") {
+				arFavorites.splice(index, 1);
+			} else {
+				count++;
+			}
+		});
+		objFavorite.text(count);
+		if(count > 0) {
+			objFavorite.removeClass("display-none");
+		} else {
+			objFavorite.addClass("display-none");
+		}
+	}
+}

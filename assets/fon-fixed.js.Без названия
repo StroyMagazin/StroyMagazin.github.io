@@ -1,0 +1,18 @@
+function PxPositionElFixed() { 
+    var winScrollPos = $(window).scrollTop(); 
+	var header = $('.bx-header').height();
+
+    if (winScrollPos >= header) { 
+        jQuery(".fon_ny").css("background-position", "50% "+(winScrollPos - header - 45)+"px");	
+    } else { 
+        jQuery(".fon_ny").css("background-position", "50% -45px"); 
+    } 
+	
+} 
+
+$(document).ready(function() {    
+  PxPositionElFixed(); 
+  $(window).scroll(function(){ 
+    PxPositionElFixed(); 
+  });    
+});

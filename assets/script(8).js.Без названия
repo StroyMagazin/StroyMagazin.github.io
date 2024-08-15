@@ -1,0 +1,24 @@
+(function($) {
+    $(document).ready(function(){
+        var bxObj           = $('.bxslider');
+        var bxMode          = $(bxObj).data('mode');
+        var bxSpeed         = $(bxObj).data('speed');
+        var bxRandomStart   = $(bxObj).data('randomstart');
+        var bxPager         = $(bxObj).data('pager');
+        var bxControls      = $(bxObj).data('controls');
+        var bxAuto          = $(bxObj).data('auto');
+        var bxPause         = $(bxObj).data('pause');
+        bxObj.fadeIn(100).bxSlider({
+            wrapperClass: 'bxslider__wrap',
+            mode: bxMode,
+            speed: bxSpeed,
+            randomStart: bxRandomStart,
+            pager: bxPager,
+            controls: bxControls,
+            auto: bxAuto,
+            pause: bxPause,
+            touchEnabled: true
+        });
+
+    });
+})(jQuery);
